@@ -389,8 +389,8 @@ def write_jobs(jobs, graph_dic_path):
 # 模型
 # # model_train_ign_metal_mt_2.log, Ki/Kd/IC50 muti-task training, 30A + ligand smiles preparation, glide
 if dock_engine == 'glide':
-    model_files = ['/apdcephfs/private_dejunjiang/105/dejunjiang/wspy/dpi/dpi_v4/metal_binding//model_save/2022-03-15_23_23_27_151564.pth',
-                   '/apdcephfs/private_dejunjiang/105/dejunjiang/wspy/dpi/dpi_v4/metal_binding//model_save/2022-03-16_04_55_04_417481.pth',
+    model_files = ['../model_save/2022-03-15_23_23_27_151564.pth',
+                   '../model_save/2022-03-16_04_55_04_417481.pth',
                    '/apdcephfs/private_dejunjiang/105/dejunjiang/wspy/dpi/dpi_v4/metal_binding//model_save/2022-03-16_10_06_07_620881.pth']
     args = argparse.Namespace(batch_size=512, d_FC_layer=200, edge_feat_size_3d=23, graph_feat_size=128,
                               n_FC_layer=2, n_tasks=3, node_feat_size=227, num_layers=5,
