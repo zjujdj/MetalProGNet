@@ -1,0 +1,3 @@
+temp/bin_files/*.bin
+model_save/*
+*.zip
