@@ -7,6 +7,7 @@ MetalProGNet: A Structure-based Deep Graph Model Specific For Metalloprotein-Lig
 git clone https://github.com/zjujdj/SuperAtomicCharge.git
 ```
 - **Step2: Download the trained models and conda-packed env**
+
 download url: [dgl430_py37_gpu.tar.gz](https://drive.google.com/file/d/10k32qTk80a7kfgu2MDR4bwYp8lx_s-74/view); [model_save.zip](https://drive.google.com/file/d/16WqXOJs0bVxatpgZHkgSZOKdch_Q2sdP/view?usp=sharing)
 ```python
 cd MetalProGNet && unzip model_save.zip && tar -xzvf dgl430_py37_gpu.tar.gz -C /home/conda_env/dgl430_py37_gpu
