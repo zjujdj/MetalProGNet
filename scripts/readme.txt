@@ -1,22 +1,38 @@
-### 第一步，运行plants_protein_prep.py进行蛋白准备
+#############linu命令行运行
+1.###克隆源代码到本地
+# 运行示例：git clone https://github.com/zjujdj/MetalProGNet.git
+
+2.###下载预测模型以及软件运行Anaconda环境到本地
+下载链接：
+https://drive.google.com/file/d/10k32qTk80a7kfgu2MDR4bwYp8lx_s-74/view?usp=sharing
+https://drive.google.com/file/d/16WqXOJs0bVxatpgZHkgSZOKdch_Q2sdP/view?usp=sharing
+
+# 运行示例
+1.cd MetalProGNet && unzip model_save.zip && tar -xzvf dgl430_py37_gpu.tar.gz -C /home/conda_env/ dgl430_py37_gpu
+2.source activate /home/conda_env/ dgl430_py37_gpu
+3.conda-unpack
+
+1.###先为PLANTS程序赋予可执行权限
+# 运行示例： chmod +x ../plants/PLANTS1.2_64bit ../plants/SPORES_64bit
+ 
+2.###运行plants_protein_prep.py进行蛋白准备
 # 传入的参数
-# 1. receptor_path, 需要进行准备的蛋白文件绝对路径, 蛋白文件需用薛定谔（protein preparation wizard）等软件提前处理(蛋白文件命名格式: pdbid_protein.pdb), 且此处最好保留住金属离子跟蛋白原子的螯合键信息，pdb文件中的record记录
+# 1. receptor_path, 需要进行准备的蛋白文件路径, 蛋白文件需用薛定谔（protein preparation wizard）等软件提前处理(蛋白文件命名格式: pdbid_protein.pdb), 且此处最好保留住金属离子跟蛋白原子的螯合键信息，pdb文件中的record记录
 # 2. plants_path, plants程序的绝对路径
 # 3. num_process, 线程数量
 # 最终准备好的蛋白文件存储于receptor_path中，文件格式 pdbid_protein_sp.pdb，但是金属离子跟蛋白原子的螯合键信息会被SPORES_64bit程序清理掉.
 # 运行示例： python3  plants_protein_prep.py --num_process=4 --receptor_path=../receptors/ --plants_path=../plants/
-
-### 第二步，运行plants_ligand_prep.py进行配体准备
+ 
+3. ### 运行plants_ligand_prep.py进行配体准备
 # 传入的参数
-# 1. ligand_file_path，配体文件存储的绝对路径，csv文件，需包含两个字段smiles和name(不要有特殊字符，唯一标记每个分子)；程序自动在ligand_file_path路径下匹配csv文件
-# 2. plants_path, plants程序的绝对路径
+# 1. ligand_file_path，配体文件存储的路径，csv文件，需包含两个字段smiles和name(不要有特殊字符，唯一标记每个分子)；程序自动在ligand_file_path路径下匹配csv文件
+# 2. plants_path, plants程序的路径
 # 3. num_process, 线程数量
-# 4. temp_path, 临时文件路径，用于存储每个分子的smi文件，程序运行完后该文件夹会被删除; 存在则会自动清空，不存在将自动创建
+# 4. temp_path, 临时文件路径，用于存储每个分子的smi文件，程序运行完后该文件夹会被删除; 存在则会自动清空，不存在将自动创建。
 # 5. dst_path, 目标文件路径，用于存储每个分子准备好的文件，文件命令格式 name_sp.mol2, 该文件夹下的内容将用于下一步的对接；存在则会自动清空，不存在将自动创建。
-# 运行示例：python3  plants_ligand_prep.py --num_process=10 --ligand_file_path=../ligand_file/ --plants_path=../plants/ --temp_path=../temp/ --dst_path=../prepared_ligands/
+# 运行示例：python3 plants_ligand_prep.py --num_process=10 --ligand_file_path=../ligand_file/ --plants_path=../plants/ --temp_path=../temp/ --dst_path=../prepared_ligands/
 
-
-#### 第三步， 运行plants_docking.py进行分子对接
+4. ####运行plants_docking.py进行分子对接
 # 传入的参数
 # 1. top1_pose_path, 用于存储plants对接程序为每个分子所产生的top-1构象(mol2格式)。程序运行完后该文件夹会被删除,存在则会自动清空,不存在将自动创建。
 # 2. top1_pose_sdf_path, 用于存储plants对接程序为每个分子所产生的top-1构象(sdf格式)。存在则会自动清空，不存在将自动创建
@@ -30,10 +46,11 @@
 # 1. cd .. && rm -rf docking_runing && mkdir -p docking_running
 # 2. cp ./scripts/plants_docking.py docking_running
 # 3. cd docking_running
-# 4. python3  plants_docking.py --num_process=10 --top1_pose_path=../top1_pose/ --top1_pose_sdf_path=../top1_pose_sdf/  --receptor_path=../receptors/  --plants_path=../plants/  --dst_path=../prepared_ligands/  --config_file_path=../config_file/  --docking_running_path=../docking_running/
+# 4. python3 plants_docking.py --num_process=10 --top1_pose_path=../top1_pose/ --top1_pose_sdf_path=../top1_pose_sdf/ --receptor_path=../receptors/  --plants_path=../plants/  --dst_path=../prepared_ligands/  --config_file_path=../config_file/  --docking_running_path=../docking_running/
 # 5. cd .. && rm -rf docking_running
+ 
 
-### 第四步,运行predict_mt_chembl.py
+5. ### 运行predict_mt_chembl.py进行亲和力的预测
 # 传入的参数
 # 1. sdfs_path, sdf文件绝对路径; sdf文件命名格式:target_id.sdf, target和id种不要出现下划线,对接构象的存储路径,每个构象将根据target从protein_path去寻找其对应的蛋白。
 # 2. protein_path,蛋白文件绝对路径; 文件命名格式:target.pdb, 蛋白文件存储路径。
@@ -46,4 +63,7 @@
 # 9. work_name
 # 运行示例:
 # 1. cd scripts
-# 2. python3  predict_mt_chembl.py --num_process=10 --bin_size=5 --batch_size=512 --sdfs_path=../top1_pose_sdf/ --protein_path=../receptors/ --temp_path=../temp/ --dock_engine=plants --csv_path=../csv_files/ --work_name=test
+# 2. python3 predict_mt_chembl.py --num_process=10 --bin_size=5 --batch_size=512 --sdfs_path=../top1_pose_sdf/ --protein_path=../receptors/ --temp_path=../temp/ --dock_engine=plants --csv_path=../csv_files/ --work_name=test
+
+ 
+ 
