@@ -4,7 +4,7 @@ MetalProGNet: A Structure-based Deep Graph Model Specific For Metalloprotein-Lig
 
 - **Step1: Clone the Repository**
 ```python
-git clone https://github.com/zjujdj/SuperAtomicCharge.git
+git clone https://github.com/zjujdj/MetalProGNet.git
 ```
 - **Step2: Download the trained models and conda-packed env**
 
